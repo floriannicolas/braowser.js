@@ -1,5 +1,5 @@
 /*!
- Braowser - 1.0.0
+ Braowser - 1.0.2
  Copyright © 2016 Florian Nicolas
  Licensed under the MIT license.
  https://github.com/ticlekiwi/braowser.js
@@ -59,7 +59,25 @@ if (name == 'Mozilla' && version >= 6 && version <= 12) {
     classes += " ie";
 }
 
+
+/* Special IE Cases
+ ----------------------------------------------------------------------------------------*/
+
+if(version == 'MSIE 8.0,8.0'){
+    version = '8';
+} else if(version == 'MSIE 9.0,9.0'){
+    version = '9';
+} else if(version == 'MSIE 10.0,10.0'){
+    version = '10';
+} else if(version == 'rv:11.0,11.0'){
+    version = '11';
+}
+
+/* Add Version
+ ----------------------------------------------------------------------------------------*/
+
 classes += " v-" + version;
+
 
 /* Check if is retina
  ----------------------------------------------------------------------------------------*/

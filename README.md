@@ -10,6 +10,8 @@ braowser.js can detect :
 * Screen resolution
 
 
+## Current version : 1.0.2
+
 ## Examples : 
 
 ```html
