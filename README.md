@@ -5,12 +5,13 @@
 braowser.js can detect : 
 
 * Operating system
+* Mobile or Touch Screen
 * Browser
 * Browser version
 * Screen resolution
 
 
-## Current version : 1.0.2
+## Current version : 1.0.3
 
 ## Examples : 
 
@@ -40,7 +41,14 @@ That's it!
 * mac 
 * windows
 * linux
- 
+* windows_phone
+* android
+* ios
+
+#### Mobile or Touch Screen detected :
+* if mobile is detected braowser.js add "mobile" class to html element.
+* if touch screen is detected braowser.js add "touch" class to html element.
+
 #### Browsers detected :
 * chrome
 * safari 
