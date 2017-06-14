@@ -1,5 +1,5 @@
 /*!
- Braowser - 1.0.3
+ Braowser - 1.0.4
  Copyright © 2016 Florian Nicolas
  Licensed under the MIT license.
  https://github.com/ticlekiwi/braowser.js
@@ -11,6 +11,7 @@ var vendor = navigator.vendor;
 var user_agent = navigator.userAgent;
 var version = null;
 var name = '';
+var is_ie = false;
 
 /* Get operating system
  ----------------------------------------------------------------------------------------*/
@@ -65,6 +66,7 @@ if (/Apple/.test(vendor)) {
 } else if (/MSIE/.test(user_agent)) {
     name = 'Internet Explorer';
     classes += " ie";
+    is_ie = true;
     version = user_agent.match(/MSIE (\d+(?:\.\d+)+(?:b\d*)?)/);
 } else if (/Gecko|Mozilla/.test(user_agent)) {
     name = 'Mozilla';
@@ -72,14 +74,11 @@ if (/Apple/.test(vendor)) {
 } else if (window.opera != undefined) {
     name = 'Opera';
     classes += " opera";
-}
+} 
 if (!version) {
     var regex = new RegExp(name + '(?:\\s|\\/)(\\d+(?:\\.\\d+)+(?:(?:a|b)\\d*)?)');
     var result = user_agent.match(regex);
     version = parseFloat(result[1]);
-}
-if (name == 'Mozilla' && version >= 6 && version <= 12) {
-    classes += " ie";
 }
 
 
@@ -88,12 +87,20 @@ if (name == 'Mozilla' && version >= 6 && version <= 12) {
 
 if(version == 'MSIE 8.0,8.0'){
     version = '8';
+    if(!is_ie)
+        classes += " ie";
 } else if(version == 'MSIE 9.0,9.0'){
     version = '9';
+    if(!is_ie)
+        classes += " ie";
 } else if(version == 'MSIE 10.0,10.0'){
     version = '10';
+    if(!is_ie)
+        classes += " ie";
 } else if(version == 'rv:11.0,11.0'){
     version = '11';
+    if(!is_ie)
+        classes += " ie";
 }
 
 /* Add Version
