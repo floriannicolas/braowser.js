@@ -16,6 +16,7 @@ braowser.js can detect :
 ### What's new in the latest version : 
 
 - Adding braowser method to check class
+- npm package created
 
 ## Examples : 
 
@@ -32,6 +33,12 @@ To use braowser.js just add this following line in your head element (braowser.j
 
 ```html
 <script type="text/javascript" src="/path/to/braowser.min.js"></script>
+```
+
+Or using npm
+
+```bash
+npm install braowser
 ```
 
 That's it!

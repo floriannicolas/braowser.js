@@ -1,0 +1,32 @@
+{
+  "name": "braowser",
+  "version": "1.0.5",
+  "description": "A very simple javascript plugin for browser detection who just add related classes to html element. ",
+  "main": "braowser.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ticlekiwi/braowser.git"
+  },
+  "keywords": [
+    "browser",
+    "detection",
+    "ie",
+    "safari",
+    "chrome",
+    "firefox",
+    "retina",
+    "operating",
+    "system",
+    "mobile",
+    "version"
+  ],
+  "author": "ticlekiwi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ticlekiwi/braowser/issues"
+  },
+  "homepage": "https://github.com/ticlekiwi/braowser#readme"
+}
