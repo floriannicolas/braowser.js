@@ -11,12 +11,11 @@ braowser.js can detect :
 * Screen resolution
 
 
-## Current version : 1.0.4
+## Current version : 1.0.5
 
 ### What's new in the latest version : 
 
-- An example page has been added
-- Fix for ie
+- Adding braowser method to check class
 
 ## Examples : 
 
@@ -89,6 +88,11 @@ html.retina{
 ```javascript
 // Only javascript
 if((' ' + document.documentElement.className + ' ').indexOf('ie v-8') > -1){
+	// Do something if browser is IE8
+}
+
+// With braowser function (purely javascript)
+if(braowser_hasClass('ie v-8')){
 	// Do something if browser is IE8
 }
 
