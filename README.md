@@ -11,11 +11,11 @@ braowser.js can detect :
 * Screen resolution
 
 
-## Current version : 1.0.8
+## Current version : 1.0.10
 
 ### What's new in the latest version : 
 
-- Adding braowser method to check class
+- ES6 import compatibility
 - npm package created
 
 ## Examples : 
