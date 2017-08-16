@@ -11,7 +11,7 @@ braowser.js can detect :
 * Screen resolution
 
 
-## Current version : 1.0.7
+## Current version : 1.0.8
 
 ### What's new in the latest version : 
 
@@ -114,8 +114,8 @@ import braowser_init, braowser_hasClass from "braowser";
 if(braowser_hasClass('ie v-8')){
 	// Do something if browser is IE8
 }
-// or use broawser_init to launch braowser again (this function is launched by default) 
-broawser_init();
+// or use braowser_init to launch braowser again (this function is launched by default) 
+braowser_init();
 ```
 
 

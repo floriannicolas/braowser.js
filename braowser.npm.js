@@ -1,11 +1,11 @@
 /*!
- Braowser - 1.0.7
+ Braowser - 1.0.8
  Copyright © 2016 Florian Nicolas
  Licensed under the MIT license.
  https://github.com/ticlekiwi/braowser.js
  !*/
 
-function braower_init(){
+function braowser_init(){
     var classes = '';
     var os = navigator.platform;
     var vendor = navigator.vendor;
@@ -133,5 +133,5 @@ function braowser_hasClass(classes){
 
 braowser_init();
 
-export default {braower_init, braowser_hasClass};
+export {braowser_init, braowser_hasClass};
 

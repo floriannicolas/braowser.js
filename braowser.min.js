@@ -1,5 +1,5 @@
 /*!
- Braowser - 1.0.7
+ Braowser - 1.0.8
  Copyright © 2016 Florian Nicolas
  Licensed under the MIT license.
  https://github.com/ticlekiwi/braowser.js
