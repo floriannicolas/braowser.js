@@ -1,5 +1,5 @@
 /*!
- Braowser - 1.0.6
+ Braowser - 1.0.7
  Copyright © 2016 Florian Nicolas
  Licensed under the MIT license.
  https://github.com/ticlekiwi/braowser.js
@@ -129,5 +129,6 @@ console.log('braowser.js : ' + classes);
 function braowser_hasClass(classes){
     return ((' ' + document.documentElement.className + ' ').indexOf(classes) > -1);
 }
+
 
 
