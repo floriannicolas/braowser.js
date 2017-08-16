@@ -11,7 +11,7 @@ braowser.js can detect :
 * Screen resolution
 
 
-## Current version : 1.0.5
+## Current version : 1.0.6
 
 ### What's new in the latest version : 
 
