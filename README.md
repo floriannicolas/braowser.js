@@ -15,7 +15,7 @@ braowser.js can detect :
 
 ### What's new in the latest version : 
 
-- Optimizations on browser detection
+- Browser detection enhancements
 
 ## Examples : 
 
