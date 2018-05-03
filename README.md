@@ -1,6 +1,6 @@
 # braowser.js
 
-### A very simple javascript plugin for browser detection who just add related classes to html element.
+### A very simple javascript plugin for browser detection that just add related classes to html element.
 
 braowser.js can detect : 
 
@@ -11,12 +11,11 @@ braowser.js can detect :
 * Screen resolution
 
 
-## Current version : 1.0.10
+## Current version : 1.1.0
 
 ### What's new in the latest version : 
 
-- ES6 import compatibility
-- npm package created
+- Optimizations on browser detection
 
 ## Examples : 
 
