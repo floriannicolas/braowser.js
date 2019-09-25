@@ -1,6 +1,6 @@
 {
   "name": "braowser",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A very simple javascript plugin for browser detection that just add related classes to html element. ",
   "main": "lib/braowser.npm.js",
   "scripts": {

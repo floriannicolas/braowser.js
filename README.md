@@ -11,11 +11,11 @@ braowser.js can detect :
 * Screen resolution
 
 
-## Current version : 1.1.0
+## Current version : 1.1.1
 
 ### What's new in the latest version : 
 
-- Browser detection enhancements
+- Browser detection enhancements on Microsoft Edge (previoulsy detected as Opera)
 
 ## Examples : 
 
