@@ -2,6 +2,8 @@
 
 ### A very simple javascript plugin for browser detection that just add related classes to html element.
 
+You can try it with this [DEMO](https://ticlekiwi.github.io/braowser.js/). 
+
 braowser.js can detect : 
 
 * Operating system
@@ -11,11 +13,12 @@ braowser.js can detect :
 * Screen resolution
 
 
-## Current version : 1.1.1
+## Current version : 1.1.2
 
 ### What's new in the latest version : 
 
 - Browser detection enhancements on Microsoft Edge (previoulsy detected as Opera)
+- Adding DEMO page.
 
 ## Examples : 
 
