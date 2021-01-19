@@ -3,10 +3,7 @@
   "version": "1.1.1",
   "description": "A very simple javascript plugin for browser detection that just add related classes to html element. ",
   "main": "lib/braowser.npm.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d lib"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ticlekiwi/braowser.git"
@@ -29,8 +26,6 @@
   "bugs": {
     "url": "https://github.com/ticlekiwi/braowser/issues"
   },
-  "devDependencies": {
-    "babel-cli": "^6.0.0"
-  },
+  "devDependencies": {},
   "homepage": "https://github.com/ticlekiwi/braowser#readme"
 }
