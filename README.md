@@ -2,7 +2,7 @@
 
 ### A very simple javascript plugin for browser detection that just add related classes to html element.
 
-You can try it with this [DEMO](https://ticlekiwi.github.io/braowser.js/). 
+You can try it with this [DEMO](https://floriannicolas.github.io/braowser.js/). 
 
 braowser.js can detect : 
 
