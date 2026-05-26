@@ -1,31 +1,50 @@
 {
   "name": "braowser",
-  "version": "1.1.2",
-  "description": "A very simple javascript plugin for browser detection that just add related classes to html element. ",
-  "main": "lib/braowser.npm.js",
-  "scripts": {},
+  "version": "2.0.0",
+  "description": "Zero-dependency browser, OS, engine, device and CPU detection. Returns a ua-parser-js-shaped result, plus optional HTML-class injection.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    }
+  },
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src/",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ticlekiwi/braowser.git"
+    "url": "git+https://github.com/floriannicolas/braowser.js.git"
   },
   "keywords": [
     "browser",
     "detection",
-    "ie",
-    "safari",
-    "chrome",
-    "firefox",
+    "useragent",
+    "ua",
+    "parser",
+    "os",
+    "device",
+    "engine",
+    "cpu",
     "retina",
-    "operating",
-    "system",
     "mobile",
-    "version"
+    "esm"
   ],
-  "author": "ticlekiwi",
+  "author": "Florian Nicolas",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ticlekiwi/braowser/issues"
+    "url": "https://github.com/floriannicolas/braowser.js/issues"
   },
   "devDependencies": {},
-  "homepage": "https://github.com/ticlekiwi/braowser#readme"
+  "homepage": "https://github.com/floriannicolas/braowser.js#readme"
 }

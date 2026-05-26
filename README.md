@@ -1,133 +1,167 @@
 # braowser.js
 
-### A very simple javascript plugin for browser detection that just add related classes to html element.
+A tiny, zero-dependency JavaScript library for browser, OS, engine, device and CPU detection. Returns a result shaped like [ua-parser-js](https://github.com/faisalman/ua-parser-js), and can optionally inject related classes (`mac`, `chrome`, `v-148`, …) onto the `<html>` element.
 
-You can try it with this [DEMO](https://floriannicolas.github.io/braowser.js/). 
+You can try it with this [DEMO](https://floriannicolas.github.io/braowser.js/).
 
-braowser.js can detect : 
+## Current version: 2.0.0
 
-* Operating system
-* Mobile or Touch Screen
-* Browser
-* Browser version
-* Screen resolution
+ESM only, no dependencies, ~7 KB unminified.
 
-
-## Current version : 1.1.2
-
-### What's new in the latest version : 
-
-- Browser detection enhancements on Microsoft Edge (previoulsy detected as Opera)
-- Adding DEMO page.
-
-## Examples : 
-
-```html
-<html class="mac firefox v-48 retina">
-```
-```html
-<html class="windows ie v-9">
-```
-
-## How to use it
-
-To use braowser.js just add this following line in your head element (braowser.js doesn't need jquery or something else to work).
-
-```html
-<script type="text/javascript" src="/path/to/braowser.min.js"></script>
-```
-
-Or using npm
+## Install
 
 ```bash
 npm install braowser
 ```
 
-That's it!
+## Usage
 
+```js
+import { Braowser } from 'braowser';
 
+const b = new Braowser();
+b.getResult();
+// {
+//   ua: "Mozilla/5.0 ...",
+//   browser: { name: "Chrome",  version: "148.0.0.0",      major: "148" },
+//   cpu:     { architecture: undefined },
+//   device:  { vendor: "Apple", model: "Macintosh",        type: undefined },
+//   engine:  { name: "Blink",   version: "148.0.0.0" },
+//   os:      { name: "macOS",   version: "10.15.7" }
+// }
+```
 
+On Chromium browsers, `getResultAsync()` queries the User-Agent Client Hints API (`navigator.userAgentData.getHighEntropyValues()`) to fill in the full version and the CPU architecture:
 
-## Documentation
+```js
+await b.getResultAsync();
+// {
+//   ua: "Mozilla/5.0 ...",
+//   browser: { name: "Chrome",  version: "148.0.7778.179", major: "148" },
+//   cpu:     { architecture: "arm64" },
+//   device:  { vendor: "Apple", model: "Macintosh",        type: undefined },
+//   engine:  { name: "Blink",   version: "148.0.7778.179" },
+//   os:      { name: "macOS",   version: "26.3.1" }
+// }
+```
 
-#### Operating systems detected :
-* mac 
-* windows
-* linux
-* windows_phone
-* android
-* ios
+On Safari/Firefox the async path falls back to the sync result.
 
-#### Mobile or Touch Screen detected :
-* if mobile is detected braowser.js add "mobile" class to html element.
-* if touch screen is detected braowser.js add "touch" class to html element.
+### HTML class injection
 
-#### Browsers detected :
-* chrome
-* safari 
-* firefox
-* edge
-* ie
-* opera
+The v1 behaviour — appending classes to the `<html>` element — is now an explicit method:
 
-#### Screen resolution :
+```js
+new Braowser().applyHtmlClasses();
+// <html class="mac chrome v-148 retina">
+```
 
-if devicePixelRatio >= 2 braowser.js add "retina" class to html element.
+You can pass a different target element if you want, e.g. `b.applyHtmlClasses(document.body)`. The method is idempotent — calling it twice does not duplicate classes — and safe to call in SSR (it no-ops when `document` is undefined).
 
+### SSR / Node
 
-### Examples of usecases in CSS
+Pass a UA string explicitly:
+
+```js
+import { Braowser } from 'braowser';
+
+const b = new Braowser(request.headers['user-agent']);
+b.getResult();
+```
+
+## API
+
+```ts
+new Braowser(ua?: string)
+
+b.getUA():              string
+b.setUA(ua: string):    this              // chainable, invalidates the cache
+b.getBrowser():         { name, version, major }
+b.getOS():              { name, version }
+b.getEngine():          { name, version }
+b.getDevice():          { vendor, model, type }
+b.getCPU():             { architecture }
+b.isMobile():           boolean           // phone or mobile-class tablet
+b.isTouch():            boolean           // runtime probe in a browser; falls back to UA inference in SSR
+b.getResult():          IResult
+b.getResultAsync():     Promise<IResult>   // enriched via UA-CH on Chromium
+b.applyHtmlClasses(target?: Element):  this
+```
+
+## Detected values
+
+| Field | Values |
+|---|---|
+| `browser.name` | `Chrome`, `Chromium`, `Edge`, `Firefox`, `Safari`, `Mobile Safari`, `Opera`, `Samsung Internet`, `IE` |
+| `engine.name` | `Blink`, `WebKit`, `Gecko`, `Trident`, `EdgeHTML`, `Presto` |
+| `os.name` | `macOS`, `Windows`, `Linux`, `Android`, `iOS`, `iPadOS`, `Chrome OS`, `Windows Phone` |
+| `device.type` | `mobile`, `tablet`, or `undefined` (desktop) |
+| `device.vendor` | `Apple`, `Google`, `Samsung`, `Xiaomi`, `Huawei`, `OnePlus`, … |
+| `cpu.architecture` | `arm64`, `arm`, `amd64`, `ia32`, `ppc64`, `ppc` |
+
+## HTML classes (back-compat with v1)
+
+`applyHtmlClasses()` emits the same vocabulary as v1, so existing CSS rules keep working:
+
+| Detected | Emitted class |
+|---|---|
+| macOS | `mac` |
+| Windows | `windows` |
+| Linux | `linux` |
+| Android | `android` |
+| iOS / iPadOS | `ios` |
+| Windows Phone | `windows_phone` |
+| Browser name | lowercased (`chrome`, `firefox`, `safari`, `edge`, `ie`, `opera`, `samsung-internet`) |
+| Browser major version | `v-{major}` |
+| Mobile UA | `mobile` |
+| Touch-capable | `touch` |
+| `devicePixelRatio >= 2` | `retina` |
+
+### CSS examples
 
 ```css
-html.ie.v-8{
+html.ie.v-8 {
     border: 1px solid #999;
 }
 
 html.safari,
-html.chrome{
-	-webkit-font-smoothing: subpixel-antialiased;
+html.chrome {
+    -webkit-font-smoothing: subpixel-antialiased;
 }
 
-html.retina{
-	background-image:url(image@2x.png);
+html.retina {
+    background-image: url(image@2x.png);
 }
 ```
 
-### Examples of usecases in Javascript
+## Upgrading from v1
 
-```javascript
-// Only javascript
-if((' ' + document.documentElement.className + ' ').indexOf('ie v-8') > -1){
-	// Do something if browser is IE8
-}
+v2 is a clean break. The old global functions (`braowser_init()`, `braowser_hasClass()`) and the auto-run-on-script-load behaviour are gone.
 
-// With braowser function (purely javascript)
-if(braowser_hasClass('ie v-8')){
-	// Do something if browser is IE8
-}
+| v1 | v2 |
+|---|---|
+| `<script src="braowser.min.js">` (auto-runs) | `<script type="module">import { Braowser } from 'braowser'; new Braowser().applyHtmlClasses();</script>` |
+| `braowser_init()` | `new Braowser().applyHtmlClasses()` |
+| `braowser_hasClass('ie v-8')` | `const r = new Braowser().getResult(); r.browser.name === 'IE' && r.browser.major === '8'` |
 
-// with jQuery or Zepto
-if($('html').hasClass('ie v-8')){
-	// Do something if browser is IE8
-}
+The CSS classes emitted by `applyHtmlClasses()` are unchanged, so your stylesheets keep working.
 
-// With ES6 import
-import braowser_init, braowser_hasClass from "braowser";
-// then you can use :
-if(braowser_hasClass('ie v-8')){
-	// Do something if browser is IE8
-}
-// or use braowser_init to launch braowser again (this function is launched by default) 
-braowser_init();
+## Running the demo locally
+
+ESM requires the demo to be served over `http://` (not opened as a `file://`). From the repo root:
+
+```bash
+python3 -m http.server 8080
+# or
+npx serve .
 ```
 
-
+Then open <http://localhost:8080>.
 
 ## Contribute
 
-We're always looking for:
+Bug reports, pull requests and ideas are welcome.
 
-* Bug reports, especially those for aspects with a reduced test case
-* Pull requests for features, spelling errors, clarifications, etc.
-* Ideas for enhancements
+## License
 
-
+MIT
