@@ -1,6 +1,6 @@
 /*!
  * Braowser 2.0.0
- * MIT License — https://github.com/ticlekiwi/braowser.js
+ * MIT License — https://github.com/floriannicolas/braowser.js
  *
  * Zero-dependency browser/OS/engine/device/CPU detection.
  * Returns a ua-parser-js-shaped result, plus optional HTML-class injection.
@@ -54,8 +54,10 @@ const BROWSER_PATTERNS = [
     [/(?:CrMo|CriOS)\/(\d+(?:\.\d+)*)/,             (m) => ({ name: 'Chrome',           version: m[1] })],
     [/Chrome\/(\d+(?:\.\d+)*)/,                     (m) => ({ name: 'Chrome',           version: m[1] })],
     [/(?:Firefox|FxiOS)\/(\d+(?:\.\d+)*)/,          (m) => ({ name: 'Firefox',          version: m[1] })],
-    [/Mobile\/\S+ Safari\/(\d+(?:\.\d+)*)/,         (m) => ({ name: 'Mobile Safari',    version: m[1] })],
+    // Prefer Version/X when present — it's the actual Safari version. Fall
+    // back to Mobile/X Safari/Y only when Version/ is absent.
     [/Version\/(\d+(?:\.\d+)*).+Mobile.+Safari\//,  (m) => ({ name: 'Mobile Safari',    version: m[1] })],
+    [/Mobile\/\S+ Safari\/(\d+(?:\.\d+)*)/,         (m) => ({ name: 'Mobile Safari',    version: m[1] })],
     [/Version\/(\d+(?:\.\d+)*).+Safari\//,          (m) => ({ name: 'Safari',           version: m[1] })],
     // IE — carries over the v1 Trident/rv: extraction
     [/Trident\/.+?rv:(\d+(?:\.\d+)*)/,              (m) => ({ name: 'IE',               version: m[1] })],
@@ -69,7 +71,9 @@ const ENGINE_PATTERNS = [
     [/Edge\/(\d+(?:\.\d+)*)/,                       (m) => ({ name: 'EdgeHTML', version: m[1] })],
     [/Trident\/(\d+(?:\.\d+)*)/,                    (m) => ({ name: 'Trident',  version: m[1] })],
     [/Presto\/(\d+(?:\.\d+)*)/,                     (m) => ({ name: 'Presto',   version: m[1] })],
-    [/(?:Chrome|CriOS|Chromium)\/(\d+(?:\.\d+)*)/,  (m) => ({ name: 'Blink',    version: m[1] })],
+    // Note: CriOS is excluded here on purpose — Chrome on iOS runs on WebKit,
+    // not Blink (Apple policy). The AppleWebKit/ rule below catches it.
+    [/(?:Chrome|Chromium)\/(\d+(?:\.\d+)*)/,        (m) => ({ name: 'Blink',    version: m[1] })],
     [/rv:(\d+(?:\.\d+)*).+Gecko\//,                 (m) => ({ name: 'Gecko',    version: m[1] })],
     [/Gecko\/(\d+(?:\.\d+)*)/,                      (m) => ({ name: 'Gecko',    version: m[1] })],
     [/(?:AppleWebKit|WebKit)\/(\d+(?:\.\d+)*)/,     (m) => ({ name: 'WebKit',   version: m[1] })],
@@ -96,9 +100,10 @@ const OS_PATTERNS = [
 ];
 
 const DEVICE_PATTERNS = [
-    [/iPhone/,                                      ()   => ({ vendor: 'Apple',   model: 'iPhone',    type: 'mobile' })],
-    [/iPad/,                                        ()   => ({ vendor: 'Apple',   model: 'iPad',      type: 'tablet' })],
+    // iPod UAs contain "CPU iPhone OS …" — keep iPod before iPhone.
     [/iPod/,                                        ()   => ({ vendor: 'Apple',   model: 'iPod',      type: 'mobile' })],
+    [/iPad/,                                        ()   => ({ vendor: 'Apple',   model: 'iPad',      type: 'tablet' })],
+    [/iPhone/,                                      ()   => ({ vendor: 'Apple',   model: 'iPhone',    type: 'mobile' })],
     [/Macintosh/,                                   ()   => ({ vendor: 'Apple',   model: 'Macintosh', type: undefined })],
     [/(Pixel(?: \d+[a-zA-Z]?(?:\s+Pro)?(?:\s+XL)?)?)/, (m) => ({ vendor: 'Google',  model: m[1],     type: 'mobile' })],
     [/(SM-[A-Z]\w+)/,                               (m) => {
@@ -284,7 +289,14 @@ export class Braowser {
         if (device.model === 'Macintosh' && looksLikeIpad()) {
             device = { vendor: 'Apple', model: 'iPad', type: 'tablet' };
         }
-        // Fallback: if we don't yet know type, fall back on the mobile regex
+        // Android: the `Mobile` token is the canonical phone/tablet signal.
+        // Check this before the broader mobile regex (which considers any
+        // `Android` token mobile-class for legacy v1 CSS reasons).
+        if (!device.type && /Android/.test(this._ua)) {
+            device = { ...device, type: /Mobile/.test(this._ua) ? 'mobile' : 'tablet' };
+        }
+        // Final fallback for non-Android mobile devices (older feature phones,
+        // BlackBerry, etc.) — keep the v1 mobile-regex behaviour.
         if (!device.type && isMobileUA(this._ua)) {
             device = { ...device, type: 'mobile' };
         }
