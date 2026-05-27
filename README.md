@@ -6,7 +6,10 @@ You can try it with this [DEMO](https://floriannicolas.github.io/braowser.js/).
 
 ## Current version: 2.0.0
 
-ESM only, no dependencies, ~7 KB unminified.
+No runtime dependencies. Two builds, same API:
+
+- **Modern (ESM)** — the source, ~7 KB unminified, uses `?.`, `??`, `async/await`. For modern projects.
+- **Legacy (IIFE)** — `dist/braowser.legacy.js`, ES2015-compatible (no `?.`, no `??`, no `async/await`, no `import/export`). For old projects that load via `<script>`.
 
 ## Install
 
@@ -14,7 +17,7 @@ ESM only, no dependencies, ~7 KB unminified.
 npm install braowser
 ```
 
-## Usage
+## Usage — modern (ESM)
 
 ```js
 import { Braowser } from 'braowser';
@@ -46,6 +49,21 @@ await b.getResultAsync();
 ```
 
 On Safari/Firefox the async path falls back to the sync result.
+
+## Usage — legacy (`<script>` tag, no module syntax)
+
+For old projects that can't use ES modules. The bundle exposes `Braowser` as a global on `window`:
+
+```html
+<script src="https://unpkg.com/braowser/dist/braowser.legacy.min.js"></script>
+<script>
+    var b = new Braowser();
+    console.log(b.getResult());
+    b.applyHtmlClasses();
+</script>
+```
+
+The legacy bundle is ES2015-compatible — `?.`, `??`, `async/await`, and `import/export` are all transpiled away by esbuild. It works in any browser that supports `class`, `Promise`, and `const`/`let` (Chrome 49+, Firefox 45+, Safari 10+, Edge 13+). Same API as the ESM build.
 
 ### HTML class injection
 

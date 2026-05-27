@@ -15,6 +15,7 @@
     "index.js",
     "index.d.ts",
     "src/",
+    "dist/",
     "LICENSE",
     "README.md"
   ],
@@ -24,7 +25,9 @@
   "sideEffects": false,
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build": "node build.mjs",
+    "prepublishOnly": "npm test && npm run build"
   },
   "repository": {
     "type": "git",
@@ -50,6 +53,7 @@
     "url": "https://github.com/floriannicolas/braowser.js/issues"
   },
   "devDependencies": {
+    "esbuild": "^0.24.0",
     "vitest": "^2.1.0"
   },
   "homepage": "https://github.com/floriannicolas/braowser.js#readme"
