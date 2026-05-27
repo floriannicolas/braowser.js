@@ -53,8 +53,8 @@
     "url": "https://github.com/floriannicolas/braowser.js/issues"
   },
   "devDependencies": {
-    "esbuild": "^0.24.0",
-    "vitest": "^2.1.0"
+    "esbuild": "^0.28.0",
+    "vitest": "^4.1.7"
   },
   "homepage": "https://github.com/floriannicolas/braowser.js#readme"
 }
