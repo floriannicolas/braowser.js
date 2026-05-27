@@ -1,6 +1,6 @@
 {
   "name": "braowser",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Zero-dependency browser, OS, engine, device and CPU detection. Returns a ua-parser-js-shaped result, plus optional HTML-class injection.",
   "type": "module",
   "exports": {

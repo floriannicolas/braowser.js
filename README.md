@@ -4,7 +4,7 @@ A tiny, zero-dependency JavaScript library for browser, OS, engine, device and C
 
 You can try it with this [DEMO](https://floriannicolas.github.io/braowser.js/).
 
-## Current version: 2.0.0
+## Current version: 2.0.1
 
 No runtime dependencies. Two builds, same API:
 

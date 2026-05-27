@@ -1,5 +1,5 @@
 /*!
- * Braowser 2.0.0
+ * Braowser 2.0.1
  * MIT License — https://github.com/floriannicolas/braowser.js
  *
  * Zero-dependency browser/OS/engine/device/CPU detection.
